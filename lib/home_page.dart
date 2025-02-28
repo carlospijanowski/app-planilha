@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'widget_catalog.dart'; // Importe a nova tela aqui
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -26,7 +27,16 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('You have pushed the button this many times:'),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WidgetCatalog()),
+                );
+              },
+              child: const Text('Exemplos de Widgets'),
+            ),
+            const Text('Você pressionou o botão tantas vezes:'),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
@@ -36,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
+        tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
     );
