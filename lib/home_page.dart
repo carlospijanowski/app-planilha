@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'widget_catalog.dart'; // Importe a nova tela aqui
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'widget_catalog.dart';
+import 'new_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -11,43 +14,96 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  File? _image;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  final ImagePicker _picker = ImagePicker();
+
+  // Função para abrir a galeria ou câmera
+  Future<void> _pickImage(ImageSource source) async {
+    final XFile? selected = await _picker.pickImage(source: source);
+    if (selected != null) {
+      setState(() {
+        _image = File(selected.path);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
           children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
+            UserAccountsDrawerHeader(
+              accountName: Text("Nome do Usuário"),
+              accountEmail: Text("email@exemplo.com"),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: _image != null ? FileImage(_image!) : null,
+                child: _image == null
+                    ? Icon(Icons.camera_alt, size: 24.0)
+                    : null,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.image),
+              title: Text('Carregar da Galeria'),
+              onTap: () {
+                _pickImage(ImageSource.gallery);
+                Navigator.of(context).pop(); // Fecha o drawer após a escolha
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.camera_alt),
+              title: Text('Tirar Foto'),
+              onTap: () {
+                _pickImage(ImageSource.camera);
+                Navigator.of(context).pop(); // Fecha o drawer após a escolha
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Página Inicial'),
+              onTap: () {
+                Navigator.of(context).pop(); // Fecha o drawer
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.widgets),
+              title: Text('Exemplos de Widgets'),
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const WidgetCatalog()),
                 );
               },
-              child: const Text('Exemplos de Widgets'),
             ),
-            const Text('Você pressionou o botão tantas vezes:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            ListTile(
+              leading: Icon(Icons.new_releases),
+              title: Text('Nova Tela'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NewScreen()),
+                );
+              },
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text('Você pressionou o botão tantas vezes:'),
+          ],
+        ),
       ),
     );
   }
