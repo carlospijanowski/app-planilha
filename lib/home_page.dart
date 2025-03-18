@@ -1,6 +1,8 @@
+import 'package:appplanilha/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'custom_nav_bar.dart';
 import 'widget_catalog.dart';
 import 'new_screen.dart';
@@ -135,6 +137,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.color_lens),
+              title: const Text('Modo Escuro'),
+              trailing: Switch(
+                value: Provider.of<ThemeProvider>(context).themeMode == ThemeMode.dark,
+                onChanged: (value) {
+                  Provider.of<ThemeProvider>(context, listen: false).toggleTheme(value);
+                },
+              ),
+            ),
+
           ],
         ),
       ),
