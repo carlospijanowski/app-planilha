@@ -14,13 +14,13 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _navigateToHome() {
-    if (_loginController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
+    // if (_loginController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyHomePage(title: 'Flutter Demo Home Page')));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Login and Password must not be empty!")),
-      );
-    }
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(content: Text("Login and Password must not be empty!")),
+    //   );
+    // }
   }
 
   @override
