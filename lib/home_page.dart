@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'cadastro_cliente.dart';
 import 'custom_nav_bar.dart';
 import 'widget_catalog.dart';
 import 'new_screen.dart';
@@ -108,6 +109,16 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 _pickImage(ImageSource.camera);
                 Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.person_add),
+              title: Text('Cadastro de Cliente'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CadastroClienteScreen()),
+                );
               },
             ),
             ListTile(
