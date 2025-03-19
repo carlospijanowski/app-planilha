@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Bem-vindo ao Cartaxo App!', style: Theme.of(context).textTheme.headlineMedium),
+            Text('Novo SIX App!', style: Theme.of(context).textTheme.headlineMedium),
             // Adicione aqui o seu logo ou outra imagem, se necessário
           ],
         ),
